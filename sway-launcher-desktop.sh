@@ -13,8 +13,8 @@ IFS=$'\n\t'
 DEL=$'\34'
 
 TERMINAL_COMMAND="${TERMINAL_COMMAND:="$TERM -e"}"
-GLYPH_COMMAND="${GLYPH_COMMAND-  }"
-GLYPH_DESKTOP="${GLYPH_DESKTOP-  }"
+GLYPH_COMMAND="${GLYPH_COMMAND-> }"
+GLYPH_DESKTOP="${GLYPH_DESKTOP}"
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/sway-launcher-desktop"
 PROVIDERS_FILE="${PROVIDERS_FILE:=providers.conf}"
 if [[ "${PROVIDERS_FILE#/}" == "${PROVIDERS_FILE}" ]]; then
@@ -267,11 +267,10 @@ readarray -t COMMAND_STR <<<$(
   fzf --ansi +s -x -d '\034' --nth ..3 --with-nth 3 \
     --print-query \
     --preview "$0 describe {2} {1}" \
-    --preview-window=up:2:noborder \
+    --preview-window=right:50%:border-left \
     --no-multi --cycle \
-    --prompt="${GLYPH_PROMPT-# }" \
-    --header='' --no-info --margin='1,2' \
-    --color='16,gutter:-1' \
+    --prompt="${GLYPH_PROMPT-$ }" \
+    --header='' --no-info \
     <"$FZFPIPE"
 ) || exit 1
 # Get the last line of the fzf output. If there were no matches, it contains the query which we'll treat as a custom command
